@@ -12,13 +12,13 @@
         }
 
         function playRound(playerSelection, computerSelection) {
+            computerSelection = getComputerChoice();
             const rockSelectionRegex = /rock/i;
             const paperSelectionRegex = /paper/i;
             const scissorsSelectionRegex = /scissors/i;
             const rock = 0;
             const paper = 1;
             const scissors = 2;
-            console.log(playerSelection)
             if (rockSelectionRegex.test(playerSelection)) {
                 playerSelection = rock;
             } else if (paperSelectionRegex.test(playerSelection)) {
@@ -26,7 +26,6 @@
             } else {
                 playerSelection = scissors;
             }
-            console.log(playerSelection)
 
             if ((playerSelection + 1 ) % 3 == computerSelection) {
                 return 'Computer wins'
@@ -37,9 +36,68 @@
             }
 
         }
+
+        function game () {
+            let playerWins = 0;
+            let computerWins = 0;
+            let gamesPlayed = 0;
+            playRound()
+            if (playRound() == 'Computer wins') {
+                computerWins++;
+                gamesPlayed++;
+            } else if (playRound() == 'Player wins') {
+                playerWins++;
+                gamesPlayed++;
+            } else {
+                gamesPlayed++;
+            }
+            playRound()
+            if (playRound() == 'Computer wins') {
+                computerWins++;
+                gamesPlayed++;
+            } else if (playRound() == 'Player wins') {
+                playerWins++;
+                gamesPlayed++;
+            } else {
+                gamesPlayed++;
+            }
+            playRound()
+            if (playRound() == 'Computer wins') {
+                computerWins++;
+                gamesPlayed++;
+            } else if (playRound() == 'Player wins') {
+                playerWins++;
+                gamesPlayed++;
+            } else {
+                gamesPlayed++;
+            }
+            playRound()
+            if (playRound() == 'Computer wins') {
+                computerWins++;
+                gamesPlayed++;
+            } else if (playRound() == 'Player wins') {
+                playerWins++;
+                gamesPlayed++;
+            } else {
+                gamesPlayed++;
+            }
+            playRound()
+            if (playRound() == 'Computer wins') {
+                computerWins++;
+                gamesPlayed++;
+            } else if (playRound() == 'Player wins') {
+                playerWins++;
+                gamesPlayed++;
+            } else {
+                gamesPlayed++;
+            }
+
+            return `The score is ${playerWins} to ${computerWins} after ${gamesPlayed} games played!`
+        }
  
 const playerSelection = "rock";
-const computerSelection = getComputerChoice();
+const computerSelection = 'placeholder';
+console.log(game())
 console.log(playRound(playerSelection, computerSelection));
     </script>
 </body>
