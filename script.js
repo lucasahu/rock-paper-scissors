@@ -1,5 +1,6 @@
 // Global Variables
 
+let gameComplete = false;
 let computerWins = 0;
 let playerWins = 0;
 let count = 0;
@@ -17,6 +18,8 @@ function playRound(string) {
     }
 
     computerSelection = Math.floor(Math.random() * 3);
+
+    console.log(playerSelection, computerSelection);
 
     if ((playerSelection + 1 ) % 3 == computerSelection) {
         result = 'Computer wins'
@@ -58,29 +61,72 @@ function winCheck (playerWins, computerWins) {
     }
 }
 
+function gameReset (gameComplete) {
+    console.log(gameComplete)
+    if (gameComplete === true) {
+        computerWins = 0;
+        playerWins = 0;
+        count = 0;
+        gameDisplay.textContent = `Game ${count}`
+        display.textContent = ``
+        scoreDisplay.textContent = `The score is ${playerWins} - ${computerWins}`
+    }
+}
 
+function resetGameBoolean () {
+    gameComplete = false;
+}
 
 const main = document.querySelector('div.main');
+const content = document.createElement('div');
+const header = document.createElement('div');
+const footer = document.createElement('div');
+const title = document.createElement('h1');
+const footerText = document.createElement('p');
 const buttonRock = document.createElement('button');
 const buttonPaper = document.createElement('button');
 const buttonScissors = document.createElement('button');
-const gameDisplay = document.createElement('p')
+const div = document.createElement('div');
+const gameDisplay = document.createElement('p');
 const display = document.createElement('p');
 const scoreDisplay = document.createElement('p');
+const rockImage = document.createElement('img');
+const paperImage = document.createElement('img');
+const scissorsImage = document.createElement('img');
 
-main.appendChild(buttonRock);
-main.appendChild(buttonPaper);
-main.appendChild(buttonScissors);
-main.appendChild(gameDisplay);
-main.appendChild(display);
-main.appendChild(scoreDisplay);
+main.appendChild(header);
+header.appendChild(title);
+main.appendChild(content);
+content.appendChild(buttonRock);
+buttonRock.appendChild(rockImage);
+content.appendChild(buttonPaper);
+buttonPaper.appendChild(paperImage);
+content.appendChild(buttonScissors);
+buttonScissors.appendChild(scissorsImage);
+main.appendChild(div)
+div.appendChild(gameDisplay);
+div.appendChild(scoreDisplay);
+div.appendChild(display);
+main.appendChild(footer);
+footer.appendChild(footerText);
 
-buttonRock.textContent = 'ROCK';
-buttonPaper.textContent = 'PAPER';
-buttonScissors.textContent = 'SCISSORS';
-gameDisplay.textContent = ``;
-display.textContent = ``;
-scoreDisplay.textContent = ``;
+title.textContent = 'Rock Paper Scissors'
+header.className = 'header';
+gameDisplay.className = 'round';
+display.className = 'result';
+scoreDisplay.className = 'score';
+footer.className = 'footer';
+footerText.className = 'footer-text'
+footerText.textContent = 'Copyright @ lucasahu 2023'
+div.className = 'display'
+content.className = 'content';
+rockImage.src= './img/img1.png';
+paperImage.src= './img/img2.png';
+scissorsImage.src= './img/img3.png';
+
+gameDisplay.textContent = `Game ${count}`
+display.textContent = ``
+scoreDisplay.textContent = `The score is ${playerWins} - ${computerWins}`
 
 buttonRock.addEventListener('click', () => playRound('rock'));
 buttonPaper.addEventListener('click', () => playRound('paper'));
@@ -89,5 +135,13 @@ buttonScissors.addEventListener('click', () => playRound('scissors'));
 buttonRock.addEventListener('click', () => winCheck(playerWins, computerWins));
 buttonPaper.addEventListener('click', () => winCheck(playerWins, computerWins));
 buttonScissors.addEventListener('click', () => winCheck(playerWins, computerWins));
+
+buttonRock.addEventListener('click', () => gameReset(gameComplete));
+buttonPaper.addEventListener('click', () => gameReset(gameComplete));
+buttonScissors.addEventListener('click', () => gameReset(gameComplete));
+
+buttonRock.addEventListener('click', () => resetGameBoolean());
+buttonPaper.addEventListener('click', () => resetGameBoolean());
+buttonScissors.addEventListener('click', () => resetGameBoolean());
 
 
