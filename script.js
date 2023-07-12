@@ -1,21 +1,13 @@
-// required variables
-let playerSelection;
-// computer choice randomizer function
-function getComputerChoice () {
-    return Math.floor(Math.random() * 3);
-}
-// function that converts the prompt input into numerical values and
-// holds the rock paper scissors logic and determines a winner for each round played
-function displayRoundPick () {
-    roundPickText.textContent = ``
-}
+// Global Variables
 
+let computerWins = 0;
+let playerWins = 0;
+let count = 0;
 
-function displayRoundResult (result) {
-    roundResultText.textContent = `${result}`
-}
+// Helper Functions
 
-function setPlayerSelection (string) {
+function playRound(string) {
+
     if (string == 'rock') {
         playerSelection = 0;
     } else if (string == 'paper') {
@@ -23,63 +15,79 @@ function setPlayerSelection (string) {
     } else if (string == 'scissors') {
         playerSelection = 2;
     }
-}
 
-function playRound(playerSelection) {
-    const computerSelection = getComputerChoice();
-    console.log('corrio')
-   console.log(playerSelection, computerSelection)
+    computerSelection = Math.floor(Math.random() * 3);
+
     if ((playerSelection + 1 ) % 3 == computerSelection) {
-        console.log('computer wins')
         result = 'Computer wins'
+        count++;
+        computerWins++;
+        gameDisplay.textContent = `Game ${count}`
+        display.textContent = `${result}`
+        scoreDisplay.textContent = `The score is ${playerWins} - ${computerWins}`
     } else if (playerSelection == computerSelection) {
-        console.log('draw')
         result = 'Its a draw'
+        count++;
+        gameDisplay.textContent = `Game ${count}`
+        display.textContent = `${result}`
+        scoreDisplay.textContent = `The score is ${playerWins} - ${computerWins}`
     } else {
-        console.log('player wins')
         result = 'Player wins'
+        count++;
+        playerWins++;
+        gameDisplay.textContent = `Game ${count}`
+        display.textContent = `${result}`
+        scoreDisplay.textContent = `The score is ${playerWins} - ${computerWins}`
     }
-    return result
+
 }
 
-// DOM Code 
+function winCheck (playerWins, computerWins) {
+    if (playerWins == 5 || computerWins == 5) {
+        if (playerWins > computerWins) {
+            setTimeout(function() {
+                alert('Player wins!');
+              }, 20);
+            gameComplete = true;
+        } else if (computerWins > playerWins) {
+            setTimeout(function() {
+                alert('Computer wins!');
+              }, 20);
+              gameComplete = true;
+        }
+    }
+}
+
+
 
 const main = document.querySelector('div.main');
-
 const buttonRock = document.createElement('button');
-buttonRock.classList.add('rock');
-buttonRock.textContent = 'Rock';
-
-buttonRock.addEventListener('click', () => setPlayerSelection('rock'));
-buttonRock.addEventListener('click', () => playRound(playerSelection))
-buttonRock.addEventListener('click', () => displayRoundResult(result))
-
 const buttonPaper = document.createElement('button');
-buttonPaper.classList.add('paper');
-buttonPaper.textContent = 'Paper';
-
-buttonPaper.addEventListener('click', () => setPlayerSelection('paper'));
-buttonPaper.addEventListener('click', () => playRound(playerSelection))
-buttonPaper.addEventListener('click', () => displayRoundResult(result))
-
 const buttonScissors = document.createElement('button');
-buttonScissors.classList.add('scissors');
-buttonScissors.textContent = 'Scissors';
-
-buttonScissors.addEventListener('click', () => setPlayerSelection('scissors'));
-buttonScissors.addEventListener('click', () => playRound(playerSelection))
-buttonScissors.addEventListener('click', () => displayRoundResult(result))
-
-const displayRound = document.createElement('div');
-const roundResultText = document.createElement('p');
-roundResultText.textContent = '';
-const roundPickText = document.createElement('p');
+const gameDisplay = document.createElement('p')
+const display = document.createElement('p');
+const scoreDisplay = document.createElement('p');
 
 main.appendChild(buttonRock);
 main.appendChild(buttonPaper);
 main.appendChild(buttonScissors);
-main.appendChild(displayRound);
-displayRound.appendChild(roundResultText);
-displayRound.appendChild(roundPickText)
+main.appendChild(gameDisplay);
+main.appendChild(display);
+main.appendChild(scoreDisplay);
+
+buttonRock.textContent = 'ROCK';
+buttonPaper.textContent = 'PAPER';
+buttonScissors.textContent = 'SCISSORS';
+gameDisplay.textContent = ``;
+display.textContent = ``;
+scoreDisplay.textContent = ``;
+
+buttonRock.addEventListener('click', () => playRound('rock'));
+buttonPaper.addEventListener('click', () => playRound('paper'));
+buttonScissors.addEventListener('click', () => playRound('scissors'));
+
+buttonRock.addEventListener('click', () => winCheck(playerWins, computerWins));
+buttonPaper.addEventListener('click', () => winCheck(playerWins, computerWins));
+buttonScissors.addEventListener('click', () => winCheck(playerWins, computerWins));
 
 
